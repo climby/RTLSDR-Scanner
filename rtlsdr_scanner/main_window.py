@@ -93,7 +93,11 @@ class RtlSdrScanner(wx.App):
 
 class FrameMain(wx.Frame):
     def __init__(self, title):
-        wx.Frame.__init__(self, None, title=title)
+        wx.Frame.__init__(self, None, title=title,
+                          #pos=wx.DefaultPosition, #pos=wx.Position(47, 115),
+                          #size=wx.Size(120, 725),
+                          style=wx.CLIP_CHILDREN
+                          )
         self.lock = threading.Lock()
 
         self.sdr = None

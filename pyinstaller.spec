@@ -88,7 +88,8 @@ def build(version=None):
               name=os.path.join('dist', filename),
               icon='icon.ico',
               version=version,
-              upx=True)
+              upx=True,
+              console=False)
 
     os.remove('icon.ico')
 
