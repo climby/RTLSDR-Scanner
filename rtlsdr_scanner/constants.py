@@ -1,4 +1,4 @@
-#
+# -*- coding: utf-8 -*-
 # rtlsdr_scan
 #
 # http://eartoearoak.com/software/rtlsdr-scanner
@@ -24,6 +24,7 @@
 #
 
 import numpy
+import gettext
 
 
 APP_NAME = 'RTLSDR Scanner'
@@ -36,9 +37,9 @@ BANDWIDTH = 500e3
 
 LOCATION_PORT = 7786
 
-MODE = ["Single", 0,
-        "Continuous", 1,
-        "Maximum", 2]
+MODE = [u"单次扫描", 0,
+        u"连续扫描", 1,
+        u"最大值扫描", 2]
 
 NFFT = [16,
         32,

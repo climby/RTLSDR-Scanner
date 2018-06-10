@@ -56,7 +56,7 @@ from rtlsdr_scanner.toolbars import NavigationToolbar, NavigationToolbarCompare
 from rtlsdr_scanner.utils_mpl import find_artists
 from rtlsdr_scanner.utils_wx import close_modeless
 from rtlsdr_scanner.widgets import GridToolTips, CheckBoxCellRenderer
-
+import gettext
 
 class PanelGraph(wx.Panel):
 

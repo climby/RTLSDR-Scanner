@@ -58,20 +58,20 @@ class DialogOffset(wx.Dialog):
                                  "adjust the offset so the shaded areas overlay the flattest parts "
                                  "of the plot_line.")
 
-        textFreq = wx.StaticText(self, label="Test frequency (MHz)")
+        textFreq = wx.StaticText(self, label=_("Test frequency (MHz)"))
         self.spinFreq = wx.SpinCtrl(self)
         self.spinFreq.SetRange(F_MIN, F_MAX)
         self.spinFreq.SetValue(200)
 
-        textGain = wx.StaticText(self, label="Test gain (dB)")
+        textGain = wx.StaticText(self, label=_("Test gain (dB)"))
         self.spinGain = wx.SpinCtrl(self)
         self.spinGain.SetRange(-100, 200)
         self.spinGain.SetValue(200)
 
-        refresh = wx.Button(self, wx.ID_ANY, 'Refresh')
+        refresh = wx.Button(self, wx.ID_ANY, _('Refresh'))
         self.Bind(wx.EVT_BUTTON, self.__on_refresh, refresh)
 
-        textOffset = wx.StaticText(self, label="Offset (kHz)")
+        textOffset = wx.StaticText(self, label=_("Offset (kHz)"))
         self.spinOffset = wx.SpinCtrl(self)
         self.spinOffset.SetRange(0, ((SAMPLE_RATE / 2) - BANDWIDTH) / 1e3)
         self.spinOffset.SetValue(offset)

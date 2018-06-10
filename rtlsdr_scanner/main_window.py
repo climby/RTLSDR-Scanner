@@ -66,7 +66,7 @@ from rtlsdr_scanner.utils_google import create_gearth
 from rtlsdr_scanner.utils_mpl import add_colours
 from rtlsdr_scanner.utils_wx import load_icon
 from rtlsdr_scanner.widgets import MultiButton
-
+import gettext
 
 class DropTarget(wx.FileDropTarget):
     def __init__(self, window):
@@ -98,6 +98,14 @@ class FrameMain(wx.Frame):
                           #size=wx.Size(120, 725),
                           style=wx.CLIP_CHILDREN
                           )
+        
+        gettext.install('rtlsdr', './locale', unicode=True)
+        # Define supported languages
+        self.presLan_en = gettext.translation('rtlsdr', './locale', languages=['en']) # English
+        self.presLan_zh = gettext.translation('rtlsdr', './locale', languages=['zh']) # Simplified Chinese  
+       
+        # Install English as the initial language
+        self.presLan_zh.install()   
         self.lock = threading.Lock()
 
         self.sdr = None
@@ -207,31 +215,31 @@ class FrameMain(wx.Frame):
         self.toolbar1 = wx.Panel(self)
 
         self.buttonStart = MultiButton(self.toolbar1,
-                                       ['Start', 'Continue'],
+                                       [_('Start'), _('Continue')],
                                        ['Start new scan', 'Continue scanning'])
         self.buttonStart.SetSelected(self.settings.startOption)
         self.buttonStop = MultiButton(self.toolbar1,
-                                      ['Stop', 'Stop at end'],
+                                      [_('Stop'), _('Stop at end')],
                                       ['Stop scan', 'Stop scan at end'])
         self.buttonStop.SetSelected(self.settings.stopOption)
         self.Bind(wx.EVT_BUTTON, self.__on_start, self.buttonStart)
         self.Bind(wx.EVT_BUTTON, self.__on_stop, self.buttonStop)
 
-        textRange = wx.StaticText(self.toolbar1, label="Range (MHz)",
+        textRange = wx.StaticText(self.toolbar1, label=_("Range (MHz)"),
                                   style=wx.ALIGN_CENTER)
-        textStart = wx.StaticText(self.toolbar1, label="Start")
-        textStop = wx.StaticText(self.toolbar1, label="Stop")
+        textStart = wx.StaticText(self.toolbar1, label=_("Start"))
+        textStop = wx.StaticText(self.toolbar1, label=_("Stop"))
 
         self.spinCtrlStart = wx.SpinCtrl(self.toolbar1)
         self.spinCtrlStop = wx.SpinCtrl(self.toolbar1)
-        self.spinCtrlStart.SetToolTipString('Start frequency')
-        self.spinCtrlStop.SetToolTipString('Stop frequency')
+        self.spinCtrlStart.SetToolTipString(_('Start frequency'))
+        self.spinCtrlStop.SetToolTipString(_('Stop frequency'))
         self.spinCtrlStart.SetRange(F_MIN, F_MAX - 1)
         self.spinCtrlStop.SetRange(F_MIN + 1, F_MAX)
         self.Bind(wx.EVT_SPINCTRL, self.__on_spin, self.spinCtrlStart)
         self.Bind(wx.EVT_SPINCTRL, self.__on_spin, self.spinCtrlStop)
 
-        textGain = wx.StaticText(self.toolbar1, label="Gain (dB)")
+        textGain = wx.StaticText(self.toolbar1, label=_("Gain (dB)"))
         self.controlGain = wx.Choice(self.toolbar1, choices=[''])
 
         grid1 = wx.GridBagSizer(5, 5)
@@ -252,20 +260,20 @@ class FrameMain(wx.Frame):
 
         self.toolbar2 = wx.Window(self)
 
-        textMode = wx.StaticText(self.toolbar2, label="Mode")
+        textMode = wx.StaticText(self.toolbar2, label=_("Mode"))
         self.choiceMode = wx.Choice(self.toolbar2, choices=MODE[::2])
-        self.choiceMode.SetToolTipString('Scanning mode')
+        self.choiceMode.SetToolTipString(_('Scanning mode'))
 
-        textDwell = wx.StaticText(self.toolbar2, label="Dwell")
+        textDwell = wx.StaticText(self.toolbar2, label=_("Dwell"))
         self.choiceDwell = wx.Choice(self.toolbar2, choices=get_dwells()[::2])
-        self.choiceDwell.SetToolTipString('Scan time per step')
+        self.choiceDwell.SetToolTipString(_('Scan time per step'))
 
         textNfft = wx.StaticText(self.toolbar2, label="FFT size")
         self.choiceNfft = wx.Choice(self.toolbar2, choices=map(str, NFFT))
-        self.choiceNfft.SetToolTipString('Higher values for greater'
-                                         'precision')
+        self.choiceNfft.SetToolTipString(_('Higher values for greater'
+                                         'precision'))
 
-        textDisplay = wx.StaticText(self.toolbar2, label="Display")
+        textDisplay = wx.StaticText(self.toolbar2, label=_("Display"))
         self.choiceDisplay = wx.Choice(self.toolbar2, choices=DISPLAY[::2])
         self.Bind(wx.EVT_CHOICE, self.__on_choice, self.choiceDisplay)
         self.choiceDisplay.SetToolTipString('Spectrogram available in'

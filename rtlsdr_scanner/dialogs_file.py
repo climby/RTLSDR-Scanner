@@ -50,12 +50,12 @@ from rtlsdr_scanner.spectrum import Extent, count_points
 from rtlsdr_scanner.utils_mpl import get_colours, create_heatmap
 from rtlsdr_scanner.utils_wx import ValidatorCoord
 from rtlsdr_scanner.widgets import TickCellRenderer
-
+import gettext
 
 class DialogProperties(wx.Dialog):
 
     def __init__(self, parent, scanInfo):
-        wx.Dialog.__init__(self, parent, title="Scan Properties")
+        wx.Dialog.__init__(self, parent, title=_("Scan Properties"))
 
         self.scanInfo = scanInfo
 
@@ -68,13 +68,13 @@ class DialogProperties(wx.Dialog):
 
         gridScan = wx.GridBagSizer(0, 0)
 
-        textDesc = wx.StaticText(self, label="Description")
+        textDesc = wx.StaticText(self, label=_("Description"))
         gridScan.Add(textDesc, (0, 0), (1, 1), wx.ALL, 5)
         self.textCtrlDesc = wx.TextCtrl(self, value=scanInfo.desc,
                                         style=wx.TE_MULTILINE)
         gridScan.Add(self.textCtrlDesc, (0, 1), (2, 2), wx.ALL | wx.EXPAND, 5)
 
-        textStart = wx.StaticText(self, label="Start")
+        textStart = wx.StaticText(self, label=_("Start"))
         gridScan.Add(textStart, (2, 0), (1, 1), wx.ALL, 5)
         textCtrlStart = wx.TextCtrl(self, value="Unknown",
                                     style=wx.TE_READONLY)
@@ -84,57 +84,57 @@ class DialogProperties(wx.Dialog):
         textMHz1 = wx.StaticText(self, wx.ID_ANY, label="MHz")
         gridScan.Add(textMHz1, (2, 2), (1, 1), wx.ALL, 5)
 
-        textStop = wx.StaticText(self, label="Stop")
+        textStop = wx.StaticText(self, label=_("Stop"))
         gridScan.Add(textStop, (3, 0), (1, 1), wx.ALL, 5)
         textCtrlStop = wx.TextCtrl(self, value="Unknown",
                                    style=wx.TE_READONLY)
         if scanInfo.stop is not None:
             textCtrlStop.SetValue(str(scanInfo.stop))
         gridScan.Add(textCtrlStop, (3, 1), (1, 1), wx.ALL, 5)
-        textMHz2 = wx.StaticText(self, label="MHz")
+        textMHz2 = wx.StaticText(self, label=_("MHz"))
         gridScan.Add(textMHz2, (3, 2), (1, 1), wx.ALL, 5)
 
-        textDwell = wx.StaticText(self, label="Dwell")
+        textDwell = wx.StaticText(self, label=_("Dwell"))
         gridScan.Add(textDwell, (4, 0), (1, 1), wx.ALL, 5)
         textCtrlDwell = wx.TextCtrl(self, value="Unknown",
                                     style=wx.TE_READONLY)
         if scanInfo.dwell is not None:
             textCtrlDwell.SetValue(str(scanInfo.dwell))
         gridScan.Add(textCtrlDwell, (4, 1), (1, 1), wx.ALL, 5)
-        textSeconds = wx.StaticText(self, label="seconds")
+        textSeconds = wx.StaticText(self, label=_("seconds"))
         gridScan.Add(textSeconds, (4, 2), (1, 1), wx.ALL, 5)
 
-        textNfft = wx.StaticText(self, label="FFT Size")
+        textNfft = wx.StaticText(self, label=_("FFT Size"))
         gridScan.Add(textNfft, (5, 0), (1, 1), wx.ALL, 5)
         textCtrlNfft = wx.TextCtrl(self, value="Unknown", style=wx.TE_READONLY)
         if scanInfo.nfft is not None:
             textCtrlNfft.SetValue(str(scanInfo.nfft))
         gridScan.Add(textCtrlNfft, (5, 1), (1, 1), wx.ALL, 5)
 
-        textRbw = wx.StaticText(self, label="RBW")
+        textRbw = wx.StaticText(self, label=_("RBW"))
         gridScan.Add(textRbw, (6, 0), (1, 1), wx.ALL, 5)
         rbw = ((SAMPLE_RATE / scanInfo.nfft) / 1000.0) * 2.0
         textCtrlStop = wx.TextCtrl(self, value="{0:.3f}".format(rbw),
                                    style=wx.TE_READONLY)
         gridScan.Add(textCtrlStop, (6, 1), (1, 1), wx.ALL, 5)
-        textKHz = wx.StaticText(self, label="kHz")
+        textKHz = wx.StaticText(self, label=_("kHz"))
         gridScan.Add(textKHz, (6, 2), (1, 1), wx.ALL, 5)
 
-        textTime = wx.StaticText(self, label="First scan")
+        textTime = wx.StaticText(self, label=_("First scan"))
         gridScan.Add(textTime, (7, 0), (1, 1), wx.ALL, 5)
         textCtrlTime = wx.TextCtrl(self, value="Unknown", style=wx.TE_READONLY)
         if scanInfo.timeFirst is not None:
             textCtrlTime.SetValue(format_time(scanInfo.timeFirst, True))
         gridScan.Add(textCtrlTime, (7, 1), (1, 1), wx.ALL, 5)
 
-        textTime = wx.StaticText(self, label="Last scan")
+        textTime = wx.StaticText(self, label=_("Last scan"))
         gridScan.Add(textTime, (8, 0), (1, 1), wx.ALL, 5)
         textCtrlTime = wx.TextCtrl(self, value="Unknown", style=wx.TE_READONLY)
         if scanInfo.timeLast is not None:
             textCtrlTime.SetValue(format_time(scanInfo.timeLast, True))
         gridScan.Add(textCtrlTime, (8, 1), (1, 1), wx.ALL, 5)
 
-        textLat = wx.StaticText(self, label="Latitude")
+        textLat = wx.StaticText(self, label=_("Latitude"))
         gridScan.Add(textLat, (9, 0), (1, 1), wx.ALL, 5)
         self.textCtrlLat = wx.TextCtrl(self, value="Unknown")
         self.textCtrlLat.SetValidator(ValidatorCoord(True))
@@ -142,7 +142,7 @@ class DialogProperties(wx.Dialog):
             self.textCtrlLat.SetValue(str(scanInfo.lat))
         gridScan.Add(self.textCtrlLat, (9, 1), (1, 1), wx.ALL, 5)
 
-        textLon = wx.StaticText(self, label="Longitude")
+        textLon = wx.StaticText(self, label=_("Longitude"))
         gridScan.Add(textLon, (10, 0), (1, 1), wx.ALL, 5)
         self.textCtrlLon = wx.TextCtrl(self, value="Unknown")
         self.textCtrlLon.SetValidator(ValidatorCoord(False))
@@ -154,19 +154,19 @@ class DialogProperties(wx.Dialog):
 
         grid.Add(boxScan, (0, 0), (1, 1), wx.ALL | wx.EXPAND, 5)
 
-        boxDevice = wx.StaticBoxSizer(wx.StaticBox(self, label="Device"),
+        boxDevice = wx.StaticBoxSizer(wx.StaticBox(self, label=_("Device")),
                                       wx.VERTICAL)
 
         gridDevice = wx.GridBagSizer(0, 0)
 
-        textName = wx.StaticText(self, label="Name")
+        textName = wx.StaticText(self, label=_("Name"))
         gridDevice.Add(textName, (0, 0), (1, 1), wx.ALL, 5)
         textCtrlName = wx.TextCtrl(self, value="Unknown", style=wx.TE_READONLY)
         if scanInfo.name is not None:
             textCtrlName.SetValue(scanInfo.name)
         gridDevice.Add(textCtrlName, (0, 1), (1, 2), wx.ALL | wx.EXPAND, 5)
 
-        textTuner = wx.StaticText(self, label="Tuner")
+        textTuner = wx.StaticText(self, label=("Tuner"))
         gridDevice.Add(textTuner, (1, 0), (1, 1), wx.ALL, 5)
         textCtrlTuner = wx.TextCtrl(self, value="Unknown",
                                     style=wx.TE_READONLY)
@@ -174,13 +174,13 @@ class DialogProperties(wx.Dialog):
             textCtrlTuner.SetValue(TUNER[scanInfo.tuner])
         gridDevice.Add(textCtrlTuner, (1, 1), (1, 2), wx.ALL | wx.EXPAND, 5)
 
-        testGain = wx.StaticText(self, label="Gain")
+        testGain = wx.StaticText(self, label=_("Gain"))
         gridDevice.Add(testGain, (2, 0), (1, 1), wx.ALL, 5)
         textCtrlGain = wx.TextCtrl(self, value="Unknown", style=wx.TE_READONLY)
         if scanInfo.gain is not None:
             textCtrlGain.SetValue(str(scanInfo.gain))
         gridDevice.Add(textCtrlGain, (2, 1), (1, 1), wx.ALL, 5)
-        textDb = wx.StaticText(self, label="dB")
+        textDb = wx.StaticText(self, label=_("dB"))
         gridDevice.Add(textDb, (2, 2), (1, 1), wx.ALL, 5)
 
         textLo = wx.StaticText(self, label="LO")
@@ -189,7 +189,7 @@ class DialogProperties(wx.Dialog):
         if scanInfo.lo is not None:
             textCtrlLo.SetValue(str(scanInfo.lo))
         gridDevice.Add(textCtrlLo, (3, 1), (1, 1), wx.ALL, 5)
-        textMHz3 = wx.StaticText(self, label="MHz")
+        textMHz3 = wx.StaticText(self, label=_("MHz"))
         gridDevice.Add(textMHz3, (3, 2), (1, 1), wx.ALL, 5)
 
         textCal = wx.StaticText(self, label="Calibration")
@@ -198,7 +198,7 @@ class DialogProperties(wx.Dialog):
         if scanInfo.calibration is not None:
             textCtrlCal.SetValue(str(scanInfo.calibration))
         gridDevice.Add(textCtrlCal, (4, 1), (1, 1), wx.ALL, 5)
-        testPpm = wx.StaticText(self, label="ppm")
+        testPpm = wx.StaticText(self, label=_("ppm"))
         gridDevice.Add(testPpm, (4, 2), (1, 1), wx.ALL, 5)
 
         boxDevice.Add(gridDevice, 1, wx.EXPAND, 5)
@@ -239,21 +239,21 @@ class DialogProperties(wx.Dialog):
 class DialogImageSize(wx.Dialog):
 
     def __init__(self, parent, settings, onlyDpi=False):
-        wx.Dialog.__init__(self, parent=parent, title='Image settings')
+        wx.Dialog.__init__(self, parent=parent, title=_('Image settings'))
 
         self.settings = settings
 
-        textWidth = wx.StaticText(self, label="Width (inches)")
+        textWidth = wx.StaticText(self, label=_("Width (inches)"))
         self.ctrlWidth = NumCtrl(self, integerWidth=2, fractionWidth=1)
         self.ctrlWidth.SetValue(settings.exportWidth)
         self.Bind(EVT_NUM, self.__update_size, self.ctrlWidth)
 
-        textHeight = wx.StaticText(self, label="Height (inches)")
+        textHeight = wx.StaticText(self, label=_("Height (inches)"))
         self.ctrlHeight = NumCtrl(self, integerWidth=2, fractionWidth=1)
         self.ctrlHeight.SetValue(settings.exportHeight)
         self.Bind(EVT_NUM, self.__update_size, self.ctrlHeight)
 
-        textDpi = wx.StaticText(self, label="Dots per inch")
+        textDpi = wx.StaticText(self, label=_("Dots per inch"))
         self.spinDpi = wx.SpinCtrl(self)
         self.spinDpi.SetRange(32, 3200)
         self.spinDpi.SetValue(settings.exportDpi)
@@ -327,7 +327,7 @@ class DialogExportSeq(wx.Dialog):
         self.sweeps = None
         self.isExporting = False
 
-        wx.Dialog.__init__(self, parent=parent, title='Export Plot Sequence')
+        wx.Dialog.__init__(self, parent=parent, title=_('Export Plot Sequence'))
 
         self.queue = Queue.Queue()
         self.timer = wx.Timer(self)
@@ -355,33 +355,33 @@ class DialogExportSeq(wx.Dialog):
         sizerCheck.Add(self.checkGrid, flag=wx.ALL, border=5)
         sizerCheck.Add(self.checkBar, flag=wx.ALL, border=5)
 
-        textRange = wx.StaticText(self, label='Range')
+        textRange = wx.StaticText(self, label=_('Range'))
 
         self.sweepTimeStamps = sorted([timeStamp for timeStamp in spectrum.keys()])
         sweepChoices = [format_time(timeStamp, True) for timeStamp in self.sweepTimeStamps]
 
-        textStart = wx.StaticText(self, label="Start")
+        textStart = wx.StaticText(self, label=_("Start"))
         self.choiceStart = wx.Choice(self, choices=sweepChoices)
         self.choiceStart.SetSelection(0)
         self.Bind(wx.EVT_CHOICE, self.__on_choice, self.choiceStart)
 
-        textEnd = wx.StaticText(self, label="End")
+        textEnd = wx.StaticText(self, label=_("End"))
         self.choiceEnd = wx.Choice(self, choices=sweepChoices)
         self.choiceEnd.SetSelection(len(self.sweepTimeStamps) - 1)
         self.Bind(wx.EVT_CHOICE, self.__on_choice, self.choiceEnd)
 
-        textSweeps = wx.StaticText(self, label='Sweeps')
+        textSweeps = wx.StaticText(self, label=_('Sweeps'))
         self.textSweeps = wx.StaticText(self, label="")
 
-        textOutput = wx.StaticText(self, label='Output')
+        textOutput = wx.StaticText(self, label=_('Output'))
 
         self.textSize = wx.StaticText(self)
-        buttonSize = wx.Button(self, label='Change...')
+        buttonSize = wx.Button(self, label=_('Change...'))
         buttonSize.SetToolTipString('Change exported image size')
         self.Bind(wx.EVT_BUTTON, self.__on_imagesize, buttonSize)
         self.__show_image_size()
 
-        buttonBrowse = wx.Button(self, label='Browse...')
+        buttonBrowse = wx.Button(self, label=_('Browse...'))
         self.Bind(wx.EVT_BUTTON, self.__on_browse, buttonBrowse)
 
         self.editDir = wx.TextCtrl(self)

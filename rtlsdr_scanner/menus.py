@@ -23,7 +23,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 import wx
-
+import gettext
 
 class MenuMain(object):
     def __init__(self, parent, settings):
@@ -31,137 +31,137 @@ class MenuMain(object):
         self.settings = settings
 
         file = wx.Menu()
-        self.new = file.Append(wx.ID_NEW, "&New",
+        self.new = file.Append(wx.ID_NEW, _("&New"),
                                "New plot_line")
-        self.open = file.Append(wx.ID_OPEN, "&Open...",
+        self.open = file.Append(wx.ID_OPEN, _("&Open..."),
                                 "Open plot_line")
-        self.merge = file.Append(wx.ID_ANY, "&Merge...",
+        self.merge = file.Append(wx.ID_ANY, _("&Merge..."),
                                  "Open and merge with current plot")
-        self.restore = file.Append(wx.ID_ANY, "&Backups...",
+        self.restore = file.Append(wx.ID_ANY, _("&Backups..."),
                                    "Manage backups from crashes")
         recent = wx.Menu()
         settings.fileHistory.UseMenu(recent)
         settings.fileHistory.AddFilesToMenu()
-        file.AppendMenu(wx.ID_ANY, "&Recent Files", recent)
+        file.AppendMenu(wx.ID_ANY, _("&Recent Files"), recent)
         file.AppendSeparator()
-        self.save = file.Append(wx.ID_SAVE, "&Save As...",
+        self.save = file.Append(wx.ID_SAVE, _("&Save As..."),
                                 "Save plot_line")
-        self.exportScan = file.Append(wx.ID_ANY, "Export scan...",
+        self.exportScan = file.Append(wx.ID_ANY, _("Export scan..."),
                                       "Export scan")
-        self.exportImage = file.Append(wx.ID_ANY, "Export image...",
+        self.exportImage = file.Append(wx.ID_ANY, _("Export image..."),
                                        "Export image")
-        self.exportSeq = file.Append(wx.ID_ANY, "Export image sequence...",
+        self.exportSeq = file.Append(wx.ID_ANY, _("Export image sequence..."),
                                      "Export sweep plots in sequence")
-        self.exportGeo = file.Append(wx.ID_ANY, "Export map...",
+        self.exportGeo = file.Append(wx.ID_ANY, _("Export map..."),
                                      "Export maps")
-        self.exportTrack = file.Append(wx.ID_ANY, "Export GPS track...",
+        self.exportTrack = file.Append(wx.ID_ANY, _("Export GPS track..."),
                                        "Export GPS data")
 
         file.AppendSeparator()
-        self.exportCont = file.Append(wx.ID_ANY, "Continuous export...",
+        self.exportCont = file.Append(wx.ID_ANY, _("Continuous export..."),
                                       'Continually export data at the end of each sweep',
                                       kind=wx.ITEM_CHECK)
 
         file.AppendSeparator()
-        self.page = file.Append(wx.ID_ANY, "Page setup...",
+        self.page = file.Append(wx.ID_ANY, _("Page setup..."),
                                 "Page setup")
-        self.preview = file.Append(wx.ID_ANY, "Print preview...",
+        self.preview = file.Append(wx.ID_ANY, _("Print preview..."),
                                    "Print preview")
-        self.printer = file.Append(wx.ID_ANY, "&Print...",
+        self.printer = file.Append(wx.ID_ANY, _("&Print..."),
                                    "Print plot_line")
         file.AppendSeparator()
-        self.properties = file.Append(wx.ID_ANY, "P&roperties...",
+        self.properties = file.Append(wx.ID_ANY, _("P&roperties..."),
                                       "Show properties")
         file.AppendSeparator()
-        self.close = file.Append(wx.ID_EXIT, "E&xit", "Exit the program")
+        self.close = file.Append(wx.ID_EXIT, _("E&xit"), "Exit the program")
 
         edit = wx.Menu()
-        self.pref = edit.Append(wx.ID_ANY, "&Preferences...",
+        self.pref = edit.Append(wx.ID_ANY, _("&Preferences..."),
                                 "Preferences")
-        self.advPref = edit.Append(wx.ID_ANY, "&Advanced preferences...",
+        self.advPref = edit.Append(wx.ID_ANY, _("&Advanced preferences..."),
                                    "Advanced preferences")
         edit.AppendSeparator()
-        self.formatting = edit.Append(wx.ID_ANY, "&Number formatting...",
+        self.formatting = edit.Append(wx.ID_ANY, _("&Number formatting..."),
                                       "Adjust the displayed precision of values")
         edit.AppendSeparator()
-        self.devicesRtl = edit.Append(wx.ID_ANY, "&Radio Devices...",
+        self.devicesRtl = edit.Append(wx.ID_ANY, _("&Radio Devices..."),
                                       "Device selection and configuration")
-        self.devicesGps = edit.Append(wx.ID_ANY, "&GPS...",
+        self.devicesGps = edit.Append(wx.ID_ANY, _("&GPS..."),
                                       "GPS selection and configuration")
         edit.AppendSeparator()
-        self.reset = edit.Append(wx.ID_ANY, "&Reset settings...",
+        self.reset = edit.Append(wx.ID_ANY, _("&Reset settings..."),
                                  "Reset setting to the default")
 
         view = wx.Menu()
-        self.clearSelect = view.Append(wx.ID_ANY, "Clear selection",
+        self.clearSelect = view.Append(wx.ID_ANY, _("Clear selection"),
                                        "Clear current selection")
-        self.showMeasure = view.Append(wx.ID_ANY, "Show &measurements",
+        self.showMeasure = view.Append(wx.ID_ANY, _("Show &measurements"),
                                        "Show measurements window",
                                        kind=wx.ITEM_CHECK)
         self.showMeasure.Check(settings.showMeasure)
         view.AppendSeparator()
-        self.fullScreen = view.Append(wx.ID_ANY, "Full screen\tF11",
+        self.fullScreen = view.Append(wx.ID_ANY, _("Full screen\tF11"),
                                       "Toggle full screen",
                                       kind=wx.ITEM_CHECK)
 
         scan = wx.Menu()
-        self.start = scan.Append(wx.ID_ANY, "&Start",
+        self.start = scan.Append(wx.ID_ANY, _("&Start"),
                                  "Start scan")
-        self.cont = scan.Append(wx.ID_ANY, "&Continue",
+        self.cont = scan.Append(wx.ID_ANY, _("&Continue"),
                                 "Continue scan")
-        self.stop = scan.Append(wx.ID_ANY, "S&top",
+        self.stop = scan.Append(wx.ID_ANY, _("S&top"),
                                 "Stop scan immediately")
-        self.stopEnd = scan.Append(wx.ID_ANY, "Stop at &end",
+        self.stopEnd = scan.Append(wx.ID_ANY, _("Stop at &end"),
                                    "Complete current sweep before stopping")
         scan.AppendSeparator()
-        self.sweepClear = scan.Append(wx.ID_ANY, "Clear all sweeps",
+        self.sweepClear = scan.Append(wx.ID_ANY, _("Clear all sweeps"),
                                       "Clear all sweeps")
-        self.sweepRemain = scan.Append(wx.ID_ANY, "Clear all but first sweep",
+        self.sweepRemain = scan.Append(wx.ID_ANY, _("Clear all but first sweep"),
                                        "Clear all but first sweep")
         scan.AppendSeparator()
-        self.sweepDelay = scan.Append(wx.ID_ANY, "Delay...",
+        self.sweepDelay = scan.Append(wx.ID_ANY, _("Delay..."),
                                       "Delay between sweeps")
 
         tools = wx.Menu()
-        self.compare = tools.Append(wx.ID_ANY, "&Compare...",
+        self.compare = tools.Append(wx.ID_ANY, _("&Compare..."),
                                     "Compare plots")
         tools.AppendSeparator()
-        self.smooth = tools.Append(wx.ID_ANY, "&Smooth...",
+        self.smooth = tools.Append(wx.ID_ANY, _("&Smooth..."),
                                    "Smooth scans")
         tools.AppendSeparator()
-        self.cal = tools.Append(wx.ID_ANY, "&Auto Calibration...",
+        self.cal = tools.Append(wx.ID_ANY, _("&Auto Calibration..."),
                                 "Automatically calibrate to a known frequency")
         tools.AppendSeparator()
-        self.gearth = tools.Append(wx.ID_ANY, "Track in Google &Earth",
+        self.gearth = tools.Append(wx.ID_ANY, _("Track in Google &Earth"),
                                    "Display recorded points in Google Earth")
-        self.gmaps = tools.Append(wx.ID_ANY, "Track in Google &Maps",
+        self.gmaps = tools.Append(wx.ID_ANY, _("Track in Google &Maps"),
                                   "Display recorded points in Google Maps")
-        self.sats = tools.Append(wx.ID_ANY, "&GPS Satellites...",
+        self.sats = tools.Append(wx.ID_ANY, _("&GPS Satellites..."),
                                  "Show satellite signal levels")
         tools.AppendSeparator()
-        self.locClear = tools.Append(wx.ID_ANY, "&Clear location data...",
+        self.locClear = tools.Append(wx.ID_ANY, _("&Clear location data..."),
                                      "Remove GPS data from scan")
         tools.AppendSeparator()
-        self.log = tools.Append(wx.ID_ANY, "&Log...",
+        self.log = tools.Append(wx.ID_ANY, _("&Log..."),
                                 "Program log")
 
         help = wx.Menu()
-        self.helpLink = help.Append(wx.ID_HELP, "&Help...",
+        self.helpLink = help.Append(wx.ID_HELP, _("&Help..."),
                                     "Link to help")
         help.AppendSeparator()
-        self.sys = help.Append(wx.ID_ANY, "&System information...",
+        self.sys = help.Append(wx.ID_ANY, _("&System information..."),
                                "Displays system information")
         help.AppendSeparator()
-        self.about = help.Append(wx.ID_ABOUT, "&About...",
+        self.about = help.Append(wx.ID_ABOUT, _("&About..."),
                                  "Information about this program")
 
         menuBar = wx.MenuBar()
-        menuBar.Append(file, "&File")
-        menuBar.Append(edit, "&Edit")
-        menuBar.Append(view, "&View")
-        menuBar.Append(scan, "&Scan")
-        menuBar.Append(tools, "&Tools")
-        menuBar.Append(help, "&Help")
+        menuBar.Append(file, _("&File"))
+        menuBar.Append(edit, _("&Edit"))
+        menuBar.Append(view, _("&View"))
+        menuBar.Append(scan, _("&Scan"))
+        #menuBar.Append(tools, _("&Tools"))
+        #menuBar.Append(help, _("&Help"))
         self.menuBar = menuBar
 
     def set_state(self, state, spectrum, locations):
@@ -201,42 +201,42 @@ class PopMenuMain(object):
 
         self.menu = wx.Menu()
 
-        self.start = self.menu.Append(wx.ID_ANY, "&Start",
+        self.start = self.menu.Append(wx.ID_ANY, _("&Start"),
                                       "Start scan")
-        self.cont = self.menu.Append(wx.ID_ANY, "&Continue",
+        self.cont = self.menu.Append(wx.ID_ANY, _("&Continue"),
                                      "Continue scan")
-        self.stop = self.menu.Append(wx.ID_ANY, "S&top",
+        self.stop = self.menu.Append(wx.ID_ANY, _("S&top"),
                                      "Stop scan immediately")
-        self.stopEnd = self.menu.Append(wx.ID_ANY, "Stop at &end",
+        self.stopEnd = self.menu.Append(wx.ID_ANY, ("Stop at &end"),
                                         "Complete current sweep "
                                         "before stopping")
         self.menu.AppendSeparator()
-        self.sweepDelay = self.menu.Append(wx.ID_ANY, "Delay...",
+        self.sweepDelay = self.menu.Append(wx.ID_ANY, _("Delay..."),
                                            "Delay between sweeps")
         self.menu.AppendSeparator()
         self.rangeLim = self.menu.Append(wx.ID_ANY,
-                                         "Set range to current zoom",
+                                         _("Set range to current zoom"),
                                          "Set scanning range to the "
                                          "current zoom")
         self.menu.AppendSeparator()
         self.pointsLim = self.menu.Append(wx.ID_ANY,
-                                          "Limit points",
+                                          _("Limit points"),
                                           "Limit points to "
                                           "increase plot_line speed",
                                           kind=wx.ITEM_CHECK)
         self.pointsLim.Check(settings.pointsLimit)
 
         self.menu.AppendSeparator()
-        self.clearSelect = self.menu.Append(wx.ID_ANY, "Clear selection",
+        self.clearSelect = self.menu.Append(wx.ID_ANY, _("Clear selection"),
                                             "Clear current selection")
         self.showMeasure = self.menu.Append(wx.ID_ANY,
-                                            "Show &measurements",
+                                            _("Show &measurements"),
                                             "Show measurements window",
                                             kind=wx.ITEM_CHECK)
         self.showMeasure.Check(settings.showMeasure)
 
         self.menu.AppendSeparator()
-        self.fullScreen = self.menu.Append(wx.ID_ANY, "Full screen\tF11",
+        self.fullScreen = self.menu.Append(wx.ID_ANY, _("Full screen\tF11"),
                                            "Toggle full screen",
                                            kind=wx.ITEM_CHECK)
 
