@@ -33,6 +33,7 @@ from threading import Thread
 import threading
 import time
 import webbrowser
+import sys
 
 import wx
 from wx.lib.agw import aui
@@ -99,10 +100,18 @@ class FrameMain(wx.Frame):
                           style=wx.CLIP_CHILDREN
                           )
         
-        gettext.install('rtlsdr', './locale', unicode=True)
+        try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
+        
+        locale_path = os.path.join(base_path, 'locale')
+        gettext.install('rtlsdr', locale_path , unicode=True)
+
         # Define supported languages
-        self.presLan_en = gettext.translation('rtlsdr', './locale', languages=['en']) # English
-        self.presLan_zh = gettext.translation('rtlsdr', './locale', languages=['zh']) # Simplified Chinese  
+        self.presLan_en = gettext.translation('rtlsdr', locale_path, languages=['en']) # English
+        self.presLan_zh = gettext.translation('rtlsdr', locale_path,  languages=['zh']) # Simplified Chinese  
        
         # Install English as the initial language
         self.presLan_zh.install()   
