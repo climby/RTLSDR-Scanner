@@ -127,7 +127,7 @@ if __name__ == '__main__':
         app.SetClassName(APP_NAME)
         wx.Locale().Init2()
         frame = FrameMain(APP_NAME)
-        frame.MoveXY(47, 115)
+        frame.MoveXY(9, 70)
         frame.SetSize((1260, 725))
         if args.file is not None:
             frame.open(os.path.abspath(args.dirname), args.filename)

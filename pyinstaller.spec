@@ -75,7 +75,7 @@ def build(version=None):
 
     a.datas += Tree('rtlsdr_scanner/res', prefix='res')
     a.datas += Tree('rtlsdr_scanner/locale', prefix='locale')
-    a.datas += Tree('d:\\gnu\\bin', typecode='BINARY')
+    a.datas += Tree('vendor/gnu/bin', typecode='BINARY')
     pyz = PYZ(a.pure)
 
     image = Image.open('rtlsdr_scanner/res/icon.png')
